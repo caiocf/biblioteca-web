@@ -1,10 +1,51 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import logo from './logo.svg';
 import 'purecss/build/pure-min.css'
 import './css/styles.css';
+import $ from 'jquery';
 
 function App(props) {
-    const [lista, setLista] = useState([{nome: 'caio', email: 'caio@dominio2.com', senha : '123'}]);
+    const [nome, setNome] = useState("");
+    const [email, setEmail] = useState("");
+    const [senha, setSenha] = useState("");
+
+    const [lista, setLista] = useState([]);
+
+    useEffect( () => { fetchAutores() }, []);
+
+    async  function fetchAutores(){
+        $.ajax({
+            url : "http://127.0.0.1:8080/api/autores",
+            type: "GET",
+            dataType: "json",
+            success: function(resposta)
+            {
+                setLista(resposta);
+            },
+            error: function (resposta) {
+                console.log("erro buscar autores");
+            }
+        });
+    }
+
+    const enviaForm = (evento) => {
+        evento.preventDefault();
+        console.log(nome);
+        $.ajax({
+            url: "http://127.0.0.1:8080/api/autores",
+            contentType: 'application/json',
+            dataType: 'json',
+            type: 'POST',
+            data: JSON.stringify({nome: nome, email: email ,senha: senha}),
+            success: function (resposta) {
+                console.log("enviado com sucesso");
+                setLista(resposta);
+            },
+            error: function (resposta) {
+                console.log("erro salvar autores");
+            }
+        });
+    }
 
     return (
       <div id="layout">
@@ -32,18 +73,18 @@ function App(props) {
               </div>
               <div className="content" id="content">
                   <div className="pure-form pure-form-aligned">
-                      <form className="pure-form pure-form-aligned">
+                      <form className="pure-form pure-form-aligned" onSubmit={enviaForm} method="POST">
                           <div className="pure-control-group">
                               <label htmlFor="nome">Nome</label>
-                              <input id="nome" type="text" name="nome" value=""  />
+                              <input id="nome" type="text" name="nome" value={nome} onChange={e => setNome(e.target.value)} />
                           </div>
                           <div className="pure-control-group">
                               <label htmlFor="email">Email</label>
-                              <input id="email" type="email" name="email" value=""  />
+                              <input id="email" type="email" name="email" value={email} onChange={e => setEmail(e.target.value)}   />
                           </div>
                           <div className="pure-control-group">
                               <label htmlFor="senha">Senha</label>
-                              <input id="senha" type="password" name="senha"  />
+                              <input id="senha" type="password" name="senha" value={senha} onChange={e => setSenha(e.target.value)}/>
                           </div>
                           <div className="pure-control-group">
                               <label></label>
@@ -62,8 +103,8 @@ function App(props) {
                           </thead>
                           <tbody>
                           {
-                              lista.map(autor => (
-                                  <tr>
+                              lista.map( autor => (
+                                  <tr key={autor.id}>
                                     <td>{autor.nome}</td>
                                     <td>{autor.email}</td>
                                   </tr>
