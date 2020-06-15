@@ -3,8 +3,9 @@ import logo from './logo.svg';
 import 'purecss/build/pure-min.css'
 import './css/styles.css';
 import $ from 'jquery';
+import InputCustomizado from "./componentes/InputCustomizado";
 
-function App(props) {
+function App() {
     const [nome, setNome] = useState("");
     const [email, setEmail] = useState("");
     const [senha, setSenha] = useState("");
@@ -23,14 +24,13 @@ function App(props) {
                 setLista(resposta);
             },
             error: function (resposta) {
-                console.log("erro buscar autores");
+                console.error("Erro buscar autores, status: " + resposta.status + " Message: " +resposta.statusText);
             }
         });
     }
 
     const enviaForm = (evento) => {
         evento.preventDefault();
-        console.log(nome);
         $.ajax({
             url: "http://127.0.0.1:8080/api/autores",
             contentType: 'application/json',
@@ -42,7 +42,7 @@ function App(props) {
                 setLista(resposta);
             },
             error: function (resposta) {
-                console.log("erro salvar autores");
+                console.error("Erro salvar autor, status: " + resposta.status + " Message: " +resposta.statusText);
             }
         });
     }
@@ -61,8 +61,6 @@ function App(props) {
                       <li className="pure-menu-item"><a href="#" className="pure-menu-link">Home</a></li>
                       <li className="pure-menu-item"><a href="#" className="pure-menu-link">Autor</a></li>
                       <li className="pure-menu-item"><a href="#" className="pure-menu-link">Livros</a></li>
-
-
                   </ul>
               </div>
           </div>
@@ -74,18 +72,11 @@ function App(props) {
               <div className="content" id="content">
                   <div className="pure-form pure-form-aligned">
                       <form className="pure-form pure-form-aligned" onSubmit={enviaForm} method="POST">
-                          <div className="pure-control-group">
-                              <label htmlFor="nome">Nome</label>
-                              <input id="nome" type="text" name="nome" value={nome} onChange={e => setNome(e.target.value)} />
-                          </div>
-                          <div className="pure-control-group">
-                              <label htmlFor="email">Email</label>
-                              <input id="email" type="email" name="email" value={email} onChange={e => setEmail(e.target.value)}   />
-                          </div>
-                          <div className="pure-control-group">
-                              <label htmlFor="senha">Senha</label>
-                              <input id="senha" type="password" name="senha" value={senha} onChange={e => setSenha(e.target.value)}/>
-                          </div>
+
+                          <InputCustomizado id="nome" type="text" name="nome"  label="Nome" value={nome} onChange={ e => setNome(e.target.value)} />
+                          <InputCustomizado id="email" type="text" name="email"  label="Email" value={email} onChange={ e => setEmail(e.target.value)}/>
+                          <InputCustomizado id="senha" type="password" name="senha"  label="Senha" value={senha} onChange={ e => setSenha(e.target.value)}/>
+
                           <div className="pure-control-group">
                               <label></label>
                               <button type="submit" className="pure-button pure-button-primary">Gravar</button>
