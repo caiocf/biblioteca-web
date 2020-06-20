@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react';
 import $ from 'jquery';
 import InputCustomizado from "./componentes/InputCustomizado";
 import PubSub from 'pubsub-js';
+import TratadorErros from './TratadorErros';
 
 function FormularioAutor() {
     const [nome, setNome] = useState("");
@@ -19,9 +20,18 @@ function FormularioAutor() {
             success: function (novaListagem) {
                 console.log("enviado com sucesso");
                 PubSub.publish("atualiza-lista-autores",novaListagem);
+                setNome('');
+                setEmail('');
+                setSenha('');
             },
             error: function (resposta) {
                 console.error("Erro salvar autor, status: " + resposta.status + " Message: " +resposta.statusText);
+                if(resposta.status === 400){
+                    new TratadorErros().publicaErros(resposta.responseJSON);
+                }
+            },
+            beforeSend: function () {
+                PubSub.publish("limpa-erros",{}) ;
             }
         });
     }
