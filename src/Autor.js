@@ -1,8 +1,9 @@
 import React, {useEffect, useState} from 'react';
 import $ from 'jquery';
 import InputCustomizado from "./componentes/InputCustomizado";
+import PubSub from 'pubsub-js';
 
-function FormularioAutor(props) {
+function FormularioAutor() {
     const [nome, setNome] = useState("");
     const [email, setEmail] = useState("");
     const [senha, setSenha] = useState("");
@@ -15,9 +16,9 @@ function FormularioAutor(props) {
             dataType: 'json',
             type: 'POST',
             data: JSON.stringify({nome: nome, email: email ,senha: senha}),
-            success: function (resposta) {
+            success: function (novaListagem) {
                 console.log("enviado com sucesso");
-                props.atualizaListagem(resposta);
+                PubSub.publish("atualiza-lista-autores",novaListagem);
             },
             error: function (resposta) {
                 console.error("Erro salvar autor, status: " + resposta.status + " Message: " +resposta.statusText);
@@ -88,7 +89,12 @@ export default function AutorBox() {
                 console.error("Erro buscar autores, status: " + resposta.status + " Message: " +resposta.statusText);
             }
         });
+
+        PubSub.subscribe("atualiza-lista-autores", (topico, novaListagem) => {
+            setLista(novaListagem);
+        });
     }
+
 
     async  function atualizaListagem(novaLista){
         setLista(novaLista);
