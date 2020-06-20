@@ -55,12 +55,12 @@ function App() {
 
           <div id="menu">
               <div className="pure-menu">
-                  <a className="pure-menu-heading" href="#">Company</a>
+                  <a className="pure-menu-heading" href="# ">Company</a>
 
                   <ul className="pure-menu-list">
-                      <li className="pure-menu-item"><a href="#" className="pure-menu-link">Home</a></li>
-                      <li className="pure-menu-item"><a href="#" className="pure-menu-link">Autor</a></li>
-                      <li className="pure-menu-item"><a href="#" className="pure-menu-link">Livros</a></li>
+                      <li className="pure-menu-item"><a href="# " className="pure-menu-link">Home</a></li>
+                      <li className="pure-menu-item"><a href="# " className="pure-menu-link">Autor</a></li>
+                      <li className="pure-menu-item"><a href="# " className="pure-menu-link">Livros</a></li>
                   </ul>
               </div>
           </div>
@@ -76,11 +76,7 @@ function App() {
                           <InputCustomizado id="nome" type="text" name="nome"  label="Nome" value={nome} onChange={ e => setNome(e.target.value)} />
                           <InputCustomizado id="email" type="text" name="email"  label="Email" value={email} onChange={ e => setEmail(e.target.value)}/>
                           <InputCustomizado id="senha" type="password" name="senha"  label="Senha" value={senha} onChange={ e => setSenha(e.target.value)}/>
-
-                          <div className="pure-control-group">
-                              <label></label>
-                              <button type="submit" className="pure-button pure-button-primary">Gravar</button>
-                          </div>
+                          <InputCustomizado id="gravar" type="submit" name="gravar" value="Gravar" className="pure-button pure-button-primary" />
                       </form>
 
                   </div>
