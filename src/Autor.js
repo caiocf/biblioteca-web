@@ -40,11 +40,11 @@ function FormularioAutor() {
         <div className="pure-form pure-form-aligned">
             <form className="pure-form pure-form-aligned" onSubmit={enviaForm} method="POST">
                 <InputCustomizado id="nome" type="text" name="nome" label="Nome" value={nome}
-                                  onChange={e => setNome(e.target.value)}/>
+                                  onChange={e => setNome(e.target.value)} placeholder='digite nome...'/>
                 <InputCustomizado id="email" type="text" name="email" label="Email" value={email}
-                                  onChange={e => setEmail(e.target.value)}/>
+                                  onChange={e => setEmail(e.target.value)} placeholder='digite email...'/>
                 <InputCustomizado id="senha" type="password" name="senha" label="Senha" value={senha}
-                                  onChange={e => setSenha(e.target.value)}/>
+                                  onChange={e => setSenha(e.target.value)} placeholder='digite senha...' min={6}/>
                 <InputCustomizado id="gravar" type="submit" name="gravar" value="Gravar"
                                   className="pure-button pure-button-primary"/>
             </form>

@@ -40,16 +40,16 @@ function FormularioLivro(props) {
         <div className="pure-form pure-form-aligned">
             <form className="pure-form pure-form-aligned" onSubmit={enviaForm} method="POST">
                 <InputCustomizado id="titulo" type="text" name="titulo" label="Titulo" value={titulo}
-                                  onChange={e => setTitulo(e.target.value)}/>
-                <InputCustomizado id="preco" type="number" name="preco" label="Preço" value={preco}
-                                  onChange={e => setPreco(e.target.value)}/>
+                                  onChange={e => setTitulo(e.target.value)}  placeholder='digite titulo...'/>
+                <InputCustomizado id="preco" type="number" precision="2" name="preco" label="Preço" value={preco}
+                                  onChange={e => setPreco( e.target.value)} pattern='[0-9]{0,5}'/>
                 <div className="pure-control-group">
                     <label htmlFor="autorId">Autor</label>
                     <select value={autorId} name="autorId" id="autorId" onChange={e => setAutorId(e.target.value)}>
-                        <option value="" disabled selected>Selecione autor</option>
+                        <option value="" disabled>Selecione autor</option>
                         {
                             props.autores.map( autor => (
-                                <option value={autor.id}>{autor.nome}</option>
+                                <option value={autor.id} key={autor.id}>{autor.nome}</option>
                             ))
                         }
                     </select>
