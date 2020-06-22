@@ -25,7 +25,7 @@ function FormularioAutor() {
                 setSenha('');
             },
             error: function (resposta) {
-                console.error("Erro salvar autor, status: " + resposta.status + " Message: " +resposta.statusText);
+                //console.error("Erro salvar autor, status: " + resposta.status + " Message: " +resposta.statusText);
                 if(resposta.status === 400){
                     new TratadorErros().publicaErros(resposta.responseJSON);
                 }
@@ -96,7 +96,7 @@ export default function AutorBox() {
                 setLista(resposta);
             },
             error: function (resposta) {
-                console.error("Erro buscar autores, status: " + resposta.status + " Message: " +resposta.statusText);
+               console.error("Erro buscar autores, status: " + resposta.status + " Message: " +resposta.statusText);
             }
         });
 
@@ -111,9 +111,14 @@ export default function AutorBox() {
     }
 
     return (
-        <div className="content" id="content">
-            <FormularioAutor atualizaListagem={atualizaListagem}/>
-            <TabelaAutores lista={lista}/>
+        <div>
+            <div className="header">
+                <h1>Cadastro de autores</h1>
+            </div>
+            <div className="content" id="content">
+                <FormularioAutor atualizaListagem={atualizaListagem}/>
+                <TabelaAutores lista={lista}/>
+            </div>
         </div>
     );
 }
