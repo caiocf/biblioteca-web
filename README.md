@@ -1,4 +1,4 @@
-Este projeto foi construido usando bootstrapped com  [Create React App](https://github.com/facebook/create-react-app).
+Este projeto foi construido usando bootstrapped com  [Create React App](https://github.com/facebook/create-react-app) v16 com Hooks.
 O mesmo como dependencias as seguintes bibliotecas:
 
 - react-router-dom
